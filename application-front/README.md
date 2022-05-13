@@ -35,9 +35,9 @@ Il y a plusieurs TODOs avec des explications de ce qui est attendu dans le proje
 
 Mettre en place un scénario de test automatique avec les étapes suivantes :
 
-- 1. Créer un compte utilisateur (API `/register`)
-- 2. Consulter ses projets (API `getProjects`)
-- 3. Créer un nouveau projet (API `/saveProject`)
-- 4. Vérifier que le nouveau projet apparaît sur l'écran des projets (API `getProjects`)
+1. Créer un compte utilisateur (API `/register`)
+2. Consulter ses projets (API `getProjects`)
+3. Créer un nouveau projet (API `/saveProject`)
+4. Vérifier que le nouveau projet apparaît sur l'écran des projets (API `getProjects`)
 
 Vous pouvez utiliser les technologies de tests de votre choix
