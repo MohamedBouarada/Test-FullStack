@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,8 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @ControllerAdvice
 public class ApplicationRouting {
 
-    @Autowired
-    UserDao userDao;
+    private final UserDao userDao;
+
+    public ApplicationRouting(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     /**
      * Inscription d'un utilisateur
@@ -33,7 +37,7 @@ public class ApplicationRouting {
      * -> modifier la fonction pour ne pas avoir de doublon
      * -> renvoyer une erreur `HttpStatus.CONFLICT`
      */
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody RegisterBean registerBean) {
         User user = new User();
         user.setUsername(registerBean.getUsername());
@@ -52,7 +56,7 @@ public class ApplicationRouting {
      * -> Récupérer l'utilisateur dans la base de données avec le bon mot de passe
      * -> Si aucun utilisateur n'est trouvé, renvoyer une erreur `HttpStatus.NOT_FOUND`
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody LoginBean loginBean) {
         // TODO Implémenter la fonction `userDao.findWithCredentials` ci-dessous
         User user = userDao.findWithCredentials(loginBean.getUsername(), loginBean.getPassword());
@@ -69,7 +73,7 @@ public class ApplicationRouting {
      * -> Sauvegarder le projet dans dans la base de données
      * -> Prendre exemple sur UserDao pour implémenter la connection Hibernate 'ProjectDao'
      */
-    @RequestMapping(value = "/saveProject", method = RequestMethod.POST)
+    @PostMapping("/saveProject")
     public ResponseEntity<Project> saveProject(@RequestBody ProjectBean projectBean) {
         Project project = null;
         return new ResponseEntity<>(project, HttpStatus.OK);

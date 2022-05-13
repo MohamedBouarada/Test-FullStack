@@ -15,7 +15,10 @@ export class LoginComponent implements OnInit {
   username: FormControl;
   password: FormControl;
 
-  constructor(private applicationService: ApplicationService, private router: Router) {
+  constructor(
+    private applicationService: ApplicationService,
+    private router: Router
+  ) {
     this.username = new FormControl('', Validators.required);
     this.password = new FormControl('', Validators.required);
 
@@ -38,5 +41,4 @@ export class LoginComponent implements OnInit {
       Swal.fire('Connexion réussie', 'Vous êtes à présent connecté', 'success');
     });
   }
-
 }

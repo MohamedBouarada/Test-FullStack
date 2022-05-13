@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import {ApplicationService} from '../service/application.service';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ApplicationService } from '../service/application.service';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +16,10 @@ export class RegisterComponent implements OnInit {
   username: FormControl;
   password: FormControl;
 
-  constructor(private applicationService: ApplicationService, private router: Router) {
+  constructor(
+    private applicationService: ApplicationService,
+    private router: Router
+  ) {
     this.email = new FormControl('');
     this.username = new FormControl('');
     this.password = new FormControl('');
@@ -42,5 +45,4 @@ export class RegisterComponent implements OnInit {
       Swal.fire('Inscription réussie', 'Vous êtes à présent connecté', 'success');
     });
   }
-
 }

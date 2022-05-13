@@ -4,6 +4,7 @@ package com.finalgo.application.bean;
  * Objet permettant le transfert des données de Login du front vers le back
  */
 public class ProjectBean {
+
     private String name;
     private Integer amount;
     private String description;

@@ -14,14 +14,17 @@ import Swal from 'sweetalert2';
 export class HomeComponent implements OnInit {
 
   private user: User;
-  private projects: Project[];
+  private projects: Array<Project>;
 
   formGroup: FormGroup;
   name: FormControl;
   amount: FormControl;
   description: FormControl;
 
-  constructor(private router: Router, private applicationService: ApplicationService) {
+  constructor(
+    private router: Router,
+    private applicationService: ApplicationService
+  ) {
     this.name = new FormControl('');
     this.amount = new FormControl('');
     this.description = new FormControl('');
