@@ -1,11 +1,31 @@
 <div class="container text-center center">
-  <form class="form-signin" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <form class="form-signin">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label class="sr-only">Username</label>
-    <input [formControl]="username" type="text" class="form-control" placeholder="Username" required>
+    <!-- TODO : Faire le binding entre les inputs et les attributs du composant -->
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Username"
+      required
+    >
     <label class="sr-only">Password</label>
-    <input [formControl]="password" type="password" class="form-control" placeholder="Password" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="formGroup.invalid">Sign in</button>
-    <button class="btn btn-lg btn-secondary btn-block" type="button" routerLink="/register">Register</button>
+    <input
+      type="password"
+      class="form-control"
+      placeholder="Password"
+      required
+    >
+    <button
+      class="btn btn-lg btn-primary btn-block"
+      type="submit"
+      [disabled]="!formIsValid"
+      (click)="onSubmit()"
+    >Sign in</button>
+    <button
+      class="btn btn-lg btn-secondary btn-block"
+      type="button"
+      routerLink="/register"
+    >Register</button>
   </form>
 </div>

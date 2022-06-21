@@ -1,24 +1,47 @@
 <div class="center">
   <button class="btn btn-secondary float-right" (click)="logout()">Sign out</button>
-  
+
   <div class="container project-form">
-    <form autocomplete="off" class="form-signin" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <form autocomplete="off" class="form-signin">
       <h3 class="h3 mb-3 font-weight-normal">Nouveau projet</h3>
       <label class="sr-only">Nom du projet</label>
-      <input [formControl]="name" type="text" class="form-control" placeholder="Nom du projet" required>
+      <input
+        (keyup)="onInputUpdate($event.target.value, 'name')"
+        type="text"
+        class="form-control"
+        placeholder="Nom du projet"
+        required
+      >
       <label class="sr-only">Montant</label>
-      <input [formControl]="amount" type="number" class="form-control" placeholder="Montant du projet, ex: 999" required>
+      <input
+        (keyup)="onInputUpdate($event.target.value, 'amount')"
+        type="number"
+        class="form-control"
+        placeholder="Montant du projet, ex: 999"
+        required
+      >
       <label class="sr-only">Description</label>
-      <textarea [formControl]="description" rows="3" class="form-control" placeholder="Description du projet" required></textarea>
-      <button class="btn btn-lg btn-primary custom-btn btn-block" type="submit" [disabled]="formGroup.invalid">Créer</button>
+      <textarea
+        (keyup)="onInputUpdate($event.target.value, 'description')"
+        rows="3"
+        class="form-control"
+        placeholder="Description du projet"
+        required
+      ></textarea>
+      <button
+        class="btn btn-lg btn-primary custom-btn btn-block"
+        type="submit"
+        [disabled]="!formIsValid"
+        (click)="onSubmit()"
+      >Créer</button>
     </form>
   </div>
-  
+
   <div>
     <h3>Projets</h3>
     <!-- Tableau contenant les projets -->
-    <!-- TODO 1: Lier le tableau ci-dessous avec `this.projects` pour afficher un projet par ligne -->
-    <!-- TODO 2: Masquer ce tableau et afficher un message indiquant l'absence de projets -->
+    <!-- TODO : Lier le tableau ci-dessous avec `this.projects` pour afficher un projet par ligne -->
+    <!-- TODO : Masquer ce tableau et afficher un message indiquant l'absence de projets -->
     <table class="project-table">
       <thead>
         <tr>

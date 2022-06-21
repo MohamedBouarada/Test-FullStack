@@ -3,7 +3,6 @@ import { User } from '../model/user.model';
 import { Router } from '@angular/router';
 import { ApplicationService } from '../service/application.service';
 import { Project } from '../model/project.model';
-import { FormControl, FormGroup } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,63 +12,63 @@ import Swal from 'sweetalert2';
 })
 export class HomeComponent implements OnInit {
 
-  private user: User;
-  private projects: Array<Project>;
+  formIsValid = true;
+  user: User;
+  projects: Array<Project>;
 
-  formGroup: FormGroup;
-  name: FormControl;
-  amount: FormControl;
-  description: FormControl;
+  name: string;
+  amount: number;
+  description: string;
 
   constructor(
     private router: Router,
     private applicationService: ApplicationService
   ) {
-    this.name = new FormControl('');
-    this.amount = new FormControl('');
-    this.description = new FormControl('');
-
-    this.formGroup = new FormGroup({
-      name: this.name,
-      amount: this.amount,
-      description: this.description
-    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getUser();
     this.getUserProjects();
   }
 
-  getUser() {
+  getUser(): void {
     this.user = JSON.parse(sessionStorage.getItem('user'));
     if (this.user === null) {
       this.router.navigate(['login']);
     }
   }
 
-  // TODO 1: Récupérer la liste des projets lié à cette utilisateur
+  // TODO : Récupérer la liste des projets lié à cette utilisateur
   // Cette fonction ne fait rien pour l'instant
   // -> Il faut remplir la liste de projet `this.projects`
-  getUserProjects() {
+  getUserProjects(): void {
     this.projects = [];
     this.applicationService.getProjects();
   }
 
-  // TODO 2: Sauvegarder les informations d'un projet grâce formulaire
+  // TODO : Sauvegarder les informations d'un projet grâce au formulaire
   // -> Appeler le backend pour créer le projet avec les bonnes informations
   // -> Ne pas oublier d'ajouter l'username de l'utilisateur
   // -> Après avoir sauvegarder le projet, l'ajouter  dans `this.projects`
-  onSubmit() {
-    console.log(this.name.value);
-    console.log(this.amount.value);
-    console.log(this.description.value);
+  onSubmit(): void {
+    console.log(this.name);
+    console.log(this.amount);
+    console.log(this.description);
     this.applicationService.saveProject();
   }
 
-  logout() {
+  logout(): void {
     sessionStorage.clear();
     this.router.navigate(['/login']);
     Swal.fire('Déconnexion réussie', 'Vous êtes à présent déconnecté', 'success');
+  }
+
+  // TODO : Validation du formulaire
+  // -> Le nom et la description du projet doivent être rempli
+  // -> Le montant du projet doit être un nombre positif
+  // Attention au typage des valeurs
+  onInputUpdate(value: string, field: string): void {
+    this[field] = value;
+    console.log(`value : ${value}; field : ${field}`);
   }
 }

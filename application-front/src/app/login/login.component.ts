@@ -11,34 +11,36 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
 
-  formGroup: FormGroup;
-  username: FormControl;
-  password: FormControl;
+  formIsValid = true;
+  username: string;
+  password: string;
 
   constructor(
     private applicationService: ApplicationService,
     private router: Router
   ) {
-    this.username = new FormControl('', Validators.required);
-    this.password = new FormControl('', Validators.required);
-
-    this.formGroup = new FormGroup({
-      username: this.username,
-      password: this.password
-    });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  onSubmit() {
-    // TODO Gérer les échecs de connexion
+  onSubmit(): void {
+    console.log('submit');
+    // TODO : Gérer les échecs de connexion
     // Losque les informations ne sont pas bonnes et que le backend renvoie une erreur,
     // Il faut afficher le bon message d'erreur avec une alerte via `Swal`
-    this.applicationService.login(this.username.value, this.password.value).subscribe((user) => {
+    const loginParams = { username: this.username, password: this.password };
+    this.applicationService.login(loginParams).subscribe((user) => {
       sessionStorage.setItem('user', JSON.stringify(user));
       this.router.navigate(['/home']);
       Swal.fire('Connexion réussie', 'Vous êtes à présent connecté', 'success');
+    }, (err) => {
+        console.error(err);
     });
+  }
+
+  // TODO : réaliser le binding entre les inputs et les attributs du component
+  onInputUpdate(value: string, field: string): void {
+    console.log(`value : ${value}; field : ${field}`);
   }
 }

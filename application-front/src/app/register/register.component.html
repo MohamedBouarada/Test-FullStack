@@ -1,13 +1,40 @@
 <div class="container text-center center">
-  <form autocomplete="off" class="form-signin" (ngSubmit)="onSubmit()">
+  <form autocomplete="off" class="form-signin">
     <h1 class="h3 mb-3 font-weight-normal">Register new account</h1>
     <label class="sr-only">Email address</label>
-    <input [formControl]="email" type="text" class="form-control" placeholder="Email" required>
+    <input
+      (keyup)="onInputUpdate($event.target.value, 'email')"
+      type="text"
+      class="form-control"
+      placeholder="Email"
+      required
+    >
     <label class="sr-only">Username</label>
-    <input [formControl]="username" type="text" class="form-control" placeholder="Username" required>
+    <input
+      (keyup)="onInputUpdate($event.target.value, 'username')"
+      type="text"
+      class="form-control"
+      placeholder="Username"
+      required
+    >
     <label class="sr-only">Password</label>
-    <input [formControl]="password" type="password" class="form-control" placeholder="Password" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="formGroup.invalid">Register</button>
-    <button class="btn btn-lg btn-secondary btn-block" type="button" routerLink="/login">Sign in</button>
+    <input
+      (keyup)="onInputUpdate($event.target.value, 'password')"
+      type="password"
+      class="form-control"
+      placeholder="Password"
+      required
+    >
+    <button
+      class="btn btn-lg btn-primary btn-block"
+      type="submit"
+      [disabled]="!formIsValid"
+      (click)="onSubmit()"
+    >Register</button>
+    <button
+      class="btn btn-lg btn-secondary btn-block"
+      type="button"
+      routerLink="/login"
+    >Sign in</button>
   </form>
 </div>

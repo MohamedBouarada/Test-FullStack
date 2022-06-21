@@ -1,5 +1,7 @@
 package com.finalgo.application.entity;
 
+import com.finalgo.application.bean.ProjectBean;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,12 @@ import java.io.Serializable;
 
 @Entity
 public class Project implements Serializable {
+
+    public Project() {
+    }
+
+    public Project(ProjectBean bean) {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
