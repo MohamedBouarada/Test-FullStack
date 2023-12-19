@@ -18,6 +18,6 @@
 
 ### Rendu et temps
 
-Indiquer ici le temps passé pour réaliser ce test, il sera pris en compte lors de la review du code : 
+Indiquer ici le temps passé pour réaliser ce test, il sera pris en compte lors de la review du code : 4h
 
 N'y passez pas plus de 4h, si vous n'avez pas terminé vous pouvez nous envoyer ce que avez réussi à faire
