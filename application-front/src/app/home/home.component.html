@@ -37,32 +37,30 @@
     </form>
   </div>
 
-  <div>
-    <h3>Projets</h3>
-    <!-- Tableau contenant les projets -->
-    <!-- TODO : Lier le tableau ci-dessous avec `this.projects` pour afficher un projet par ligne -->
-    <!-- TODO : Masquer ce tableau et afficher un message indiquant l'absence de projets -->
-    <table class="project-table">
-      <thead>
-        <tr>
-          <!-- project.name -->
-          <th>Nom</th>
-          <!-- project.amount -->
-          <th>Montant</th>
-          <!-- project.description -->
-          <th>Description</th>
-          <!-- project.ownerUsername -->
-          <th>Propriétaire</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <div *ngIf="projects && projects.length > 0">
+  <h3>Projets</h3>
+  <table class="project-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Montant</th>
+        <th>Description</th>
+        <th>Propriétaire</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of projects">
+        <td>{{ project.name }}</td>
+        <td>{{ project.amount }}</td>
+        <td>{{ project.description }}</td>
+        <td>{{ project.ownerUsername }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!(projects && projects.length > 0)">
+  <p>Aucun projet trouvé.</p>
+</div>
+
 </div>

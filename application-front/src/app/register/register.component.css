@@ -53,3 +53,9 @@ body {
     width: 50%;
     padding: 10px;
 }
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}

@@ -3,13 +3,16 @@ package com.finalgo.application.api;
 import com.finalgo.application.bean.LoginBean;
 import com.finalgo.application.bean.ProjectBean;
 import com.finalgo.application.bean.RegisterBean;
+import com.finalgo.application.dao.ProjectDao;
 import com.finalgo.application.dao.UserDao;
 import com.finalgo.application.entity.Project;
 import com.finalgo.application.entity.User;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,9 +33,11 @@ public class ApplicationRouting {
     private final UserDao userDao;
     private static final Logger logger = Logger.getLogger(ApplicationRouting.class.getName());
 
+    private final ProjectDao projectDao;
 
-    public ApplicationRouting(UserDao userDao) {
+   public ApplicationRouting(UserDao userDao, ProjectDao projectDao) {
         this.userDao = userDao;
+        this.projectDao = projectDao;
     }
 
     /**
@@ -46,6 +52,10 @@ public class ApplicationRouting {
      */
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody RegisterBean registerBean) {
+         if (userDao.existsByUsername(registerBean.getUsername()) || userDao.existsByEmail(registerBean.getEmail())) {
+            // User already exists, return HttpStatus.CONFLICT
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
         User user = new User();
         user.setUsername(registerBean.getUsername());
         user.setPassword(registerBean.getPassword());
@@ -65,9 +75,14 @@ public class ApplicationRouting {
      */
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody LoginBean loginBean) {
+        System.out.println(loginBean.getPassword());
         // TODO Implémenter la fonction `userDao.findWithCredentials` ci-dessous
         User user = userDao.findWithCredentials(loginBean.getUsername(), loginBean.getPassword());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(user);
+        if (user != null) {
+        return ResponseEntity.ok(user);
+        } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
     }
 
     /**
@@ -82,10 +97,23 @@ public class ApplicationRouting {
      */
     @PostMapping("/saveProject")
     public ResponseEntity<Project> saveProject(
-            @RequestBody(required = false) ProjectBean projectBean
+            @RequestBody ProjectBean projectBean
     ) {
-        Project project = new Project(projectBean);
-        return ResponseEntity.status(HttpStatus.OK).body(project);
+        
+        if (projectBean != null) {
+            Project project = new Project(projectBean);
+            project.setName(projectBean.getName());
+            project.setAmount(projectBean.getAmount());
+            project.setDescription(projectBean.getDescription());
+            project.setOwnerUsername(projectBean.getOwnerUsername());
+            projectDao.create(project);
+
+            return ResponseEntity.status(HttpStatus.OK).body(project);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        // Project project = new Project(projectBean);
+        // return ResponseEntity.status(HttpStatus.OK).body(project);
     }
 
     /*
@@ -96,6 +124,14 @@ public class ApplicationRouting {
       On veut une List<Project> récupérée de la table 'Project'
      */
 
+    @GetMapping("/getProjects")
+    public ResponseEntity<List<Project>> getProjects(
+            @RequestParam String ownerUsername
+    ) {
+        List<Project> projects = projectDao.findByOwnerUsername(ownerUsername);
+
+        return ResponseEntity.ok(projects);
+    }
 
     /**
      * TODO : Un ancien stagiaire a réalisé une API très instable en se basant sur du code

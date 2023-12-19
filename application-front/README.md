@@ -14,7 +14,7 @@ Le but est d'avoir un frontend permettant de :
 
 ## Démarrage
 
-1. Installer les dépendances via `npm install`
+1. Installer les dépendances via `npm install --force`
 2. Lancer le serveur de développement `ng serve`, la page sera accessible sur `localhost:4200`
 
 ## Tâche

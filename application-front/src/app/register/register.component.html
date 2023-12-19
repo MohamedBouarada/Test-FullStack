@@ -9,6 +9,8 @@
       placeholder="Email"
       required
     >
+    <div *ngIf="!isEmailValid()" class="error-message">Invalid email format</div>
+
     <label class="sr-only">Username</label>
     <input
       (keyup)="onInputUpdate($event.target.value, 'username')"
@@ -17,6 +19,8 @@
       placeholder="Username"
       required
     >
+    <div *ngIf="!isUsernameValid()" class="error-message">Username is required</div>
+
     <label class="sr-only">Password</label>
     <input
       (keyup)="onInputUpdate($event.target.value, 'password')"
@@ -25,6 +29,9 @@
       placeholder="Password"
       required
     >
+    <div *ngIf="!isPasswordValid()" class="error-message">
+      Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one digit, and one special character.
+    </div>
     <button
       class="btn btn-lg btn-primary btn-block"
       type="submit"
